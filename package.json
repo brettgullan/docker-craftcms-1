@@ -1,0 +1,41 @@
+{
+  "name": "docker-craftcms",
+  "version": "1.0.0",
+  "description": "Dockerized development environment for Craft CMS.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --config ./webpack.config.js --mode development --host 0.0.0.0 --disable-host-check",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.0.4",
+    "babel-preset-env": "^1.7.0",
+    "chai": "*",
+    "chai-as-promised": "*",
+    "chalk": "^2.4.1",
+    "fancy-log": "^1.3.2",
+    "mocha": "*",
+    "proxyquire": "^2.1.0",
+    "react-hot-loader": "^4.3.11",
+    "sinon": "*",
+    "sinon-chai": "*",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "*",
+    "webpack-cli": "*",
+    "webpack-dev-server": "*"
+  },
+  "dependencies": {
+    "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.10.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-habitat": "^1.0.1"
+  }
+}
