@@ -123,3 +123,25 @@ services:
       - mariadb
       # - postgres
       - redis
+
+  whoami:
+    image: emilevauge/whoami # A container that exposes an API to show its IP address
+    container_name: "whoami.${DOMAIN}"
+    labels:
+      # - "traefik.frontend.rule=Host:wtf.tcf.test"
+      - "traefik.frontend.rule=Host:${DOMAIN}; PathPrefix:/assets"
+
+  # Configure a hot-reloading webpack-dev-server instance
+  # and wires it into our stack via Traefik
+  appdev:
+    build:
+      context: ./bin/app-dev
+    container_name: "app-dev.${DOMAIN}"
+    environment:
+      - NODE_ENV=development
+    volumes: # For webpack dev server to use our local files
+      - ./src:/app/src
+    command: "npm run dev"
+    labels:
+      - "traefik.port=3000"
+      - "traefik.frontend.rule=Host:${DOMAIN}; PathPrefixStrip:/scripts"
