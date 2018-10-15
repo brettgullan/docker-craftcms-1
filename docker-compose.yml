@@ -25,22 +25,22 @@ services:
       traefik.frontend.rule: "Host:traefik.${DOMAIN}"
       traefik.port: "8080"
 
-  portainer:
-    image: portainer/portainer
-    container_name: "portainer.${DOMAIN}"
-    restart: unless-stopped
-    command: --no-auth -H unix:///var/run/docker.sock
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      # Use the following yaml formatting to allow our basic auth
-      # variables to be properly escaped
-      - "traefik.backend=portainer"
-      - "traefik.port=9000"
-      - "traefik.frontend.rule=Host:portainer.${DOMAIN}"
-      - 'traefik.frontend.auth.basic=${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD_ENCRYPTED}'
-    depends_on:
-      - traefik
+  # portainer:
+  #   image: portainer/portainer
+  #   container_name: "portainer.${DOMAIN}"
+  #   restart: unless-stopped
+  #   command: --no-auth -H unix:///var/run/docker.sock
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   labels:
+  #     # Use the following yaml formatting to allow our basic auth
+  #     # variables to be properly escaped
+  #     - "traefik.backend=portainer"
+  #     - "traefik.port=9000"
+  #     - "traefik.frontend.rule=Host:portainer.${DOMAIN}"
+  #     - 'traefik.frontend.auth.basic=${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD_ENCRYPTED}'
+  #   depends_on:
+  #     - traefik
 
   mariadb:
     image: mariadb:10.3.6
@@ -124,21 +124,23 @@ services:
       # - postgres
       - redis
 
-  whoami:
-    image: emilevauge/whoami # A container that exposes an API to show its IP address
-    container_name: "whoami.${DOMAIN}"
-    labels:
-      # - "traefik.frontend.rule=Host:wtf.tcf.test"
-      - "traefik.frontend.rule=Host:${DOMAIN}; PathPrefix:/assets"
+  # whoami:
+  #   image: emilevauge/whoami # A container that exposes an API to show its IP address
+  #   container_name: "whoami.${DOMAIN}"
+  #   labels:
+  #     # - "traefik.frontend.rule=Host:wtf.tcf.test"
+  #     - "traefik.frontend.rule=Host:${DOMAIN}; PathPrefix:/assets"
 
   # Configure a hot-reloading webpack-dev-server instance
   # and wires it into our stack via Traefik
   appdev:
-    build:
-      context: ./bin/app-dev
+    # build:
+    #   context: ./bin/app-dev
+    image: node:8-alpine
     container_name: "app-dev.${DOMAIN}"
     environment:
       - NODE_ENV=development
+    working_dir: /app
     ports:
       - 3000:3000
     volumes: # For webpack dev server to use our local files
