@@ -139,6 +139,8 @@ services:
     container_name: "app-dev.${DOMAIN}"
     environment:
       - NODE_ENV=development
+    ports:
+      - 3000:3000
     volumes: # For webpack dev server to use our local files
       - ./src:/app/src
     command: "npm run dev"
