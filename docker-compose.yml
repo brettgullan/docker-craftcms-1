@@ -142,7 +142,7 @@ services:
     ports:
       - 3000:3000
     volumes: # For webpack dev server to use our local files
-      - ./src:/app/src
+      - .:/app
     command: "npm run dev"
     labels:
       - "traefik.port=3000"
